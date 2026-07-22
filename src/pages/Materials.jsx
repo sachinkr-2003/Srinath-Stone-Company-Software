@@ -24,7 +24,7 @@ export default function Materials() {
     fetchMaterials();
   }, []);
 
-  const fetchMaterials = async () => {
+  async function fetchMaterials() {
     try {
       setLoading(true);
       const data = await api.get('/materials');
@@ -35,7 +35,7 @@ export default function Materials() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleDelete = (id) => {
     Swal.fire({

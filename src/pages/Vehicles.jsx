@@ -10,8 +10,6 @@ import { api } from '../lib/api';
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
-  
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -26,18 +24,15 @@ export default function Vehicles() {
     fetchVehicles();
   }, []);
 
-  const fetchVehicles = async () => {
+  async function fetchVehicles() {
     try {
-      setLoading(true);
       const data = await api.get('/vehicles');
       setVehicles(data);
     } catch (error) {
       console.error('Failed to fetch vehicles:', error);
       Swal.fire({ title: 'Error', text: 'Failed to load vehicles', icon: 'error' });
-    } finally {
-      setLoading(false);
     }
-  };
+  }
 
   const filteredVehicles = vehicles.filter(v => 
     v.number?.toLowerCase().includes(search.toLowerCase()) || 

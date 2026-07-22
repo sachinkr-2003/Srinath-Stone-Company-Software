@@ -43,14 +43,14 @@ export default function Expenses() {
     fetchExpenses();
   }, []);
 
-  const fetchExpenses = async () => {
+  async function fetchExpenses() {
     try {
       const data = await api.get('/expenses');
       setExpenses(data);
     } catch (error) {
       console.error('Failed to fetch expenses', error);
     }
-  };
+  }
 
   const handleAddChange = (e) => {
     setAddFormData({ ...addFormData, [e.target.name]: e.target.value });

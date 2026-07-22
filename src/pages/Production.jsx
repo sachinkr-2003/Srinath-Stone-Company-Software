@@ -33,7 +33,7 @@ export default function Production() {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
+  async function fetchData() {
     try {
       const [logs, materials] = await Promise.all([
         api.get('/production'),
@@ -44,7 +44,7 @@ export default function Production() {
     } catch (error) {
       console.error('Failed to fetch data', error);
     }
-  };
+  }
 
   const handleAddChange = (e) => {
     setAddFormData({ ...addFormData, [e.target.name]: e.target.value });

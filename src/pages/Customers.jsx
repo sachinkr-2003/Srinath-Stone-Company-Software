@@ -27,7 +27,7 @@ export default function Customers() {
     fetchCustomers();
   }, []);
 
-  const fetchCustomers = async () => {
+  async function fetchCustomers() {
     try {
       setLoading(true);
       const data = await api.get('/customers');
@@ -38,7 +38,7 @@ export default function Customers() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const filteredCustomers = customers.filter(c => 
     c.name.toLowerCase().includes(search.toLowerCase()) || 

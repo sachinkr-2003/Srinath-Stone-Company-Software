@@ -29,22 +29,22 @@ export default function Billing() {
     fetchInitialData();
   }, []);
 
-  const fetchInitialData = async () => {
+  async function fetchInitialData() {
     try {
-      const [bills, customers, vehicles, materials] = await Promise.all([
+      const [billsRes, custRes, vehRes, matRes] = await Promise.all([
         api.get('/billing'),
         api.get('/customers'),
         api.get('/vehicles'),
         api.get('/materials')
       ]);
-      setInvoices(bills);
-      setCustomersOptions([{ value: '', label: 'Select Customer' }, ...customers.map(c => ({ value: c.id, label: c.name }))]);
-      setVehiclesOptions([{ value: '', label: 'Select Vehicle' }, ...vehicles.map(v => ({ value: v.id, label: `${v.number} (${v.owner})` }))]);
-      setMaterialsOptions([{ value: '', label: 'Select Material' }, ...materials.map(m => ({ value: m.id, label: `${m.name} - ₹${m.rate}/Ton` }))]);
+      setInvoices(billsRes);
+      setCustomersOptions([{ value: '', label: 'Select Customer' }, ...custRes.map(c => ({ value: c.id, label: c.name }))]);
+      setVehiclesOptions([{ value: '', label: 'Select Vehicle' }, ...vehRes.map(v => ({ value: v.id, label: `${v.number} (${v.owner})` }))]);
+      setMaterialsOptions([{ value: '', label: 'Select Material' }, ...matRes.map(m => ({ value: m.id, label: m.name }))]);
     } catch (error) {
-      console.error('Failed to fetch billing data:', error);
+      console.error('Failed to fetch initial data', error);
     }
-  };
+  }
 
   const totalAmount = (parseFloat(formData.quantity) || 0) * (parseFloat(formData.rate) || 0);
 
